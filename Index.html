@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Emoji Game</title>
+    <style>
+        body { text-align: center; font-family: Arial, sans-serif; }
+        #character { font-size: 50px; display: inline-block; transition: transform 0.5s; }
+        button { margin: 10px; padding: 10px; font-size: 16px; cursor: pointer; }
+        #notification { margin-top: 20px; font-weight: bold; color: darkblue; }
+    </style>
+</head>
+<body>
+    <h2>Interactive Emoji Game</h2>
+    <p>Use buttons or keys to interact with the character!</p>
+    
+    <div id="character">😀</div>
+    <p id="actionMessage">Press buttons or keys to see changes!</p>
+    <p id="notification"></p>
+    
+    <button onclick="bounce()">Bounce</button>
+    <button onclick="shake()">Shake</button>
+    <button onclick="changeFace()">Change Face</button>
+    <button onclick="reset()">Reset</button>
+    
+    <script>
+        const character = document.getElementById("character");
+        const actionMessage = document.getElementById("actionMessage");
+        const notification = document.getElementById("notification");
+        
+        function bounce() {
+            character.style.transform = "translateY(-30px)";
+            setTimeout(() => character.style.transform = "translateY(0px)", 300);
+            showNotification("Bounce Event: The character bounced!");
+            actionMessage.textContent = "Action: Character Bounced!";
+        }
+        
+        function shake() {
+            character.style.transform = "translateX(-10px)";
+            setTimeout(() => character.style.transform = "translateX(10px)", 100);
+            setTimeout(() => character.style.transform = "translateX(-10px)", 200);
+            setTimeout(() => character.style.transform = "translateX(10px)", 300);
+            setTimeout(() => character.style.transform = "translateX(0px)", 400);
+            showNotification("Shake Event: The character shook!");
+            actionMessage.textContent = "Action: Character Shook!";
+        }
+        
+        function changeFace() {
+            const faces = ["😀", "😂", "😎", "😡", "😱"];
+            character.textContent = faces[Math.floor(Math.random() * faces.length)];
+            showNotification("Change Face Event: The character changed expression!");
+            actionMessage.textContent = "Action: Character Changed Expression!";
+        }
+        
+        function reset() {
+            character.textContent = "😀";
+            character.style.transform = "none";
+            showNotification("Reset Event: Character reset to default state!");
+            actionMessage.textContent = "Action: Reset to Default!";
+        }
+        
+        function showNotification(message) {
+            notification.textContent = message;
+            setTimeout(() => notification.textContent = "", 2000);
+        }
+        
+        document.addEventListener("keydown", function(event) {
+            if (event.key === "ArrowUp") bounce();
+            if (event.key === "ArrowRight") shake();
+            if (event.key === "Enter") changeFace();
+            if (event.key === "r") reset();
+        });
+    </script>
+</body>
+</html>
